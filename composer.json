@@ -1,0 +1,34 @@
+{
+    "name": "syg/iconic",
+    "description": "An easy to use client for the Iconic Australia Seller Centre API",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kazim P",
+            "email": "kazim.parkar@syginteractive.com.au"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "~3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "SYG\\Iconic\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SYG\\Iconic\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SYG\\Iconic\\IconicServiceProvider"
+            ]
+        }
+    }
+}
