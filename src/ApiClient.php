@@ -6,7 +6,7 @@ use SYG\Iconic\Exceptions\ActionNotSupportedException;
 
 class ApiClient
 {
-	private const ALLOWED_GET_METHODS = ['GetBrands', 'GetOrder', 'GetOrderItems', 'GetOrderComments'];
+	private const ALLOWED_GET_METHODS = ['GetBrands', 'GetOrder', 'GetOrderItems', 'GetOrderComments', 'SetStatusToReadyToShip', 'SetStatusToShipped'];
 	private const ALLOWED_POST_METHODS = ['CreateWebhook', 'DeleteWebhook'];
 
 	private $globalParameters;

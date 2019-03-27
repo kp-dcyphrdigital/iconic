@@ -13,10 +13,14 @@ class OrderItemUpdater
 		$this->iconicClient = $iconicClient;
 	}
 
-	public function updateToShipped($orderItemId, $shipmentProvider, $trackingCode)
+	public function updateToReadyToShip($orderItemIds, $shipmentProvider, $trackingCode)
 	{
-		return json_decode( $this->iconicClient->postData(SetStatusToReadyToShip', ['OrderItemIds' => [$orderItemId], 'DeliveryType' => 'dropship', 'ShippingProvider' => $shipmentProvider, 'TrackingNumber' => $trackingCode]) )
-				->SuccessResponse->Body->Orders->Order;	
+		return json_decode( $this->iconicClient->getData('SetStatusToReadyToShip', ['OrderItemIds' => '[' . $orderItemIds . ']', 'DeliveryType' => 'dropship', 'ShippingProvider' => $shipmentProvider, 'TrackingNumber' => $trackingCode]) );	
+	}
+
+	public function updateToShipped($orderItemId)
+	{
+		return json_decode( $this->iconicClient->getData('SetStatusToShipped', ['OrderItemId' => $orderItemId]) );	
 	}
 
 }

@@ -31,6 +31,10 @@ class IconicServiceProvider extends ServiceProvider
         $this->app->bind('SYG\Iconic\OrderRetriever', function($app) {
             return new \SYG\Iconic\OrderRetriever(app('SYG\Iconic\ApiClient'));
         });
+
+        $this->app->bind('SYG\Iconic\OrderItemUpdater', function($app) {
+            return new \SYG\Iconic\OrderItemUpdater(app('SYG\Iconic\ApiClient'));
+        });
     }
 
     /**
