@@ -21,4 +21,9 @@
             <directory suffix=".php">./src</directory>
         </whitelist>
     </filter>
+    <php>
+        <env name="ICONIC_API_URL" value="Your Iconic API Url"/>
+        <env name="ICONIC_API_USER" value="Your Iconic API User"/>
+        <env name="ICONIC_API_KEY" value="Your Iconic API Key"/>
+    </php>
 </phpunit>

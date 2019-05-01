@@ -2,12 +2,14 @@
 
 namespace SYG\Iconic;
 
+use GuzzleHttp\Exception\TransferException;
+use SYG\Iconic\Exceptions\ApiNotAvailableException;
 use SYG\Iconic\Exceptions\ActionNotSupportedException;
 
 class ApiClient
 {
-	private const ALLOWED_GET_METHODS = ['GetBrands', 'GetOrder', 'GetOrderItems', 'GetOrderComments', 'SetStatusToReadyToShip', 'SetStatusToShipped'];
-	private const ALLOWED_POST_METHODS = ['CreateWebhook', 'DeleteWebhook'];
+	private const ALLOWED_GET_METHODS = ['GetBrands', 'GetProducts', 'GetOrder', 'GetOrderItems', 'GetOrderComments', 'SetStatusToReadyToShip', 'SetStatusToShipped', 'GetWebhookEntities'];
+	private const ALLOWED_POST_METHODS = ['ProductUpdate', 'CreateWebhook', 'DeleteWebhook'];
 
 	private $globalParameters;
 	private $httpClient;
@@ -24,22 +26,30 @@ class ApiClient
 			throw new ActionNotSupportedException("This GET method is not currently supported");
 		}
 
-		return $this->httpClient->get(
-			config('iconic.apiUrl'), 
-			['query' => $this->prepareQueryString($action, $parameters)] 
-		)->getBody();
+		try {
+			return $this->httpClient->get(
+				config('iconic.apiUrl'), 
+				['query' => $this->prepareQueryString($action, $parameters)] 
+			)->getBody();
+		} catch (TransferException $e) {
+			throw new ApiNotAvailableException("API is currently not available");
+		}
 	}
 
-	public function postData($action, $payload)
+	public function postData($action, $payload, $parameters = [])
 	{
 		if (! in_array($action, self::ALLOWED_POST_METHODS) ) {
 			throw new ActionNotSupportedException("This POST method is not currently supported");
 		}
 
-		return $this->httpClient->post(
-			config('iconic.apiUrl'), 
-			['query' => $this->prepareQueryString($action), 'body' => $payload ]
-		)->getBody();
+		try {
+			return $this->httpClient->post(
+				config('iconic.apiUrl'), 
+				['query' => $this->prepareQueryString($action, $parameters), 'body' => $payload ]
+			)->getBody();
+		} catch (TransferException $e) {
+			throw new ApiNotAvailableException("API is currently not available");
+		}
 	}
 
 	private function prepareQueryString($action, $parameters)

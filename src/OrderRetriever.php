@@ -3,6 +3,7 @@
 namespace SYG\Iconic;
 
 use SYG\Iconic\ApiClient;
+use SYG\Iconic\Exceptions\{InvalidRequestDataException, InvalidApiCredentialsException};
 
 class OrderRetriever
 {
@@ -24,8 +25,17 @@ class OrderRetriever
 
 	private function getOrder()
 	{
-		return json_decode( $this->iconicClient->getData('GetOrder', ['OrderId' => $this->orderId]) )
-				->SuccessResponse->Body->Orders->Order;	
+		$response = json_decode( $this->iconicClient->getData('GetOrder', ['OrderId' => $this->orderId]) );
+		
+		if(isset($response->ErrorResponse) && $response->ErrorResponse->Head->ErrorCode == 9) {
+			throw new InvalidApiCredentialsException;
+		}
+
+		if(isset($response->ErrorResponse) && $response->ErrorResponse->Head->ErrorCode == 16) {
+			throw new InvalidRequestDataException;
+		}
+
+		return $response->SuccessResponse->Body->Orders->Order;	
 	}
 
 	private function getOrderItems()
