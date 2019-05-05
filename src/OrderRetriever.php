@@ -35,7 +35,7 @@ class OrderRetriever
 			throw new InvalidRequestDataException;
 		}
 
-		\Log::info("Order Id: " . $this->orderId . "Order Response\n" . $response . "\n");
+		\Log::info("Order Id: " . $this->orderId . "Order Response\n" . json_encode($response) . "\n");
 		return $response->SuccessResponse->Body->Orders->Order;	
 	}
 
@@ -43,7 +43,7 @@ class OrderRetriever
 	{
 		$response = json_decode( $this->iconicClient->getData('GetOrderItems', ['OrderId' => $this->orderId]) );
 
-		\Log::info("Order Id: " . $this->orderId . "Order Items Response\n" . $response . "\n");
+		\Log::info("Order Id: " . $this->orderId . "Order Items Response\n" . json_encode($response) . "\n");
 		return $response->SuccessResponse->Body;		
 	}
 
