@@ -35,13 +35,16 @@ class OrderRetriever
 			throw new InvalidRequestDataException;
 		}
 
+		\Log::info("Order Id: " . $this->orderId . "Order Response\n" . $response . "\n");
 		return $response->SuccessResponse->Body->Orders->Order;	
 	}
 
 	private function getOrderItems()
 	{
-		return json_decode( $this->iconicClient->getData('GetOrderItems', ['OrderId' => $this->orderId]) )
-			->SuccessResponse->Body;		
+		$response = json_decode( $this->iconicClient->getData('GetOrderItems', ['OrderId' => $this->orderId]) );
+
+		\Log::info("Order Id: " . $this->orderId . "Order Items Response\n" . $response . "\n");
+		return $response->SuccessResponse->Body;		
 	}
 
 }
