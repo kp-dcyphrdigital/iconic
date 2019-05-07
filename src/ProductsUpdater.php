@@ -16,8 +16,8 @@ class ProductsUpdater
 
 	public function updateProducts($products)
 	{
-		dd( view('iconic::product-updater-payload', ['products' => $products])->render() );
-		$response = json_decode( $this->iconicClient->postData('ProductUpdate') );
+		$payload = view('iconic::product-updater-payload', ['products' => $products])->render();
+		$response = json_decode( $this->iconicClient->postData('ProductUpdate', $payload) );
 		
 		if(isset($response->ErrorResponse) && $response->ErrorResponse->Head->ErrorCode == 9) {
 			throw new InvalidApiCredentialsException;

@@ -35,6 +35,10 @@ class IconicServiceProvider extends ServiceProvider
         $this->app->bind('SYG\Iconic\OrderItemUpdater', function($app) {
             return new \SYG\Iconic\OrderItemUpdater(app('SYG\Iconic\ApiClient'));
         });
+
+        $this->app->bind('SYG\Iconic\ProductsUpdater', function($app) {
+            return new \SYG\Iconic\ProductsUpdater(app('SYG\Iconic\ApiClient'));
+        });
     }
 
     /**
@@ -51,7 +55,7 @@ class IconicServiceProvider extends ServiceProvider
                 __DIR__.'/../config/config.php' => config_path('iconic.php'),
             ], 'config');
             $this->commands([
-                Commands\IconicTestClient::class,
+                //
             ]);
         }
     }
