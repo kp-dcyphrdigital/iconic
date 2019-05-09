@@ -15,7 +15,7 @@ class IconicServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'iconic');
 
-        $this->app->singleton('SYG\Iconic\ApiClient', function ($app) {
+        $this->app->bind('SYG\Iconic\ApiClient', function ($app) {
             $httpClient = new \GuzzleHttp\Client([ 
                 'headers' => ['Content-type' => 'text/xml', 'Accept' => 'Version_2.0'],
             ]);
