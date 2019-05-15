@@ -36,7 +36,7 @@ class OrderRetriever
 		}
 
 		if(isset($response->ErrorResponse)) {
-			throw new \RuntimeException("Order Id: " . $this->orderId . "Order Response\n" . json_encode($response) . "\n");
+			throw new \RuntimeException("Order Id: " . $this->orderId . "\nOrder Response\n" . json_encode($response) . "\n");
 		}
 
 		return $response->SuccessResponse->Body->Orders->Order;	
@@ -47,7 +47,7 @@ class OrderRetriever
 		$response = json_decode( $this->iconicClient->getData('GetOrderItems', ['OrderId' => $this->orderId]) );
 
 		if(isset($response->ErrorResponse)) {
-			throw new \RuntimeException("Order Id: " . $this->orderId . "Order Items Response\n" . json_encode($response) . "\n");
+			throw new \RuntimeException("Order Id: " . $this->orderId . "\nOrder Items Response\n" . json_encode($response) . "\n");
 		}
 
 		return $response->SuccessResponse->Body;		
