@@ -9,6 +9,10 @@
 		<SalePrice>{{ $product->sale_price }}</SalePrice>
 		<SaleStartDate>{{ now()->toIso8601String() }}</SaleStartDate>
 		<SaleEndDate>{{ now()->addDays($product->sale_duration)->toIso8601String() }}</SaleEndDate>
+		@else
+		<SalePrice></SalePrice>
+		<SaleStartDate></SaleStartDate>
+		<SaleEndDate></SaleEndDate>
 		@endif 
 	</Product>
 	@endforeach
