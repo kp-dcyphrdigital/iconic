@@ -14,9 +14,9 @@ class ProductsRetriever
 		$this->iconicClient = $iconicClient;
 	}
 
-	public function getProducts()
+	public function getProducts($offset = 0)
 	{
-		$response = json_decode( $this->iconicClient->getData('GetProducts') );
+		$response = json_decode( $this->iconicClient->getData('GetProducts', ['Offset' => $offset]) );
 		
 		if(isset($response->ErrorResponse) && $response->ErrorResponse->Head->ErrorCode == 9) {
 			throw new InvalidApiCredentialsException;
